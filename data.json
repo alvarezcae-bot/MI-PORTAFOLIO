@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "brandName": "Tu nombre",
+    "heroTitle": "La luz, capturada.",
+    "heroTagline": "Una selección de fotografías y video.",
+    "aboutMeta": "Cámara · Ciudad · Desde el año",
+    "aboutBio": "Escribí acá tu biografía: cómo empezaste, qué te interesa fotografiar o filmar, tu enfoque o estilo.",
+    "contactEmail": "tu@email.com",
+    "contactInstaHandle": "@tuusuario",
+    "contactInstaUrl": "https://instagram.com/tuusuario"
+  },
+  "media": [
+    {
+      "id": "p001",
+      "type": "image",
+      "album": "Retratos",
+      "title": "Retrato en luz natural",
+      "camera": "Canon AE-1, 50mm",
+      "location": "Santiago, Chile",
+      "year": "2025",
+      "thumb": "https://tu-cdn-o-repo/media/retrato-01-thumb.jpg",
+      "src": "https://tu-cdn-o-repo/media/retrato-01.jpg"
+    },
+    {
+      "id": "v001",
+      "type": "video",
+      "album": "Motion",
+      "title": "Detrás de cámara",
+      "camera": "Sony A7S III",
+      "location": "Valparaíso, Chile",
+      "year": "2025",
+      "poster": "https://tu-cdn-o-repo/media/detras-de-camara-poster.jpg",
+      "src": "https://tu-cdn-o-repo/media/detras-de-camara.mp4",
+      "controls": true,
+      "muted": false,
+      "loop": false,
+      "autoplay": false
+    }
+  ]
+}
