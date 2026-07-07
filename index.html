@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio fotográfico</title>
+<meta name="description" content="Portafolio de fotografía y video.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,500;1,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14130f;
+    --surface:#1c1a15;
+    --surface-2:#242019;
+    --text:#f2ede4;
+    --muted:#948e7e;
+    --muted-2:#6b6656;
+    --accent:#c9a227;
+    --accent-dim:#8a6f22;
+    --line:#332f26;
+    --font-display:'Fraunces', serif;
+    --font-body:'Work Sans', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  ::selection{background:var(--accent); color:#14130f;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  /* ---------- layout shell ---------- */
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){.wrap{padding:0 20px;}}
+
+  /* ---------- nav ---------- */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,19,15,0.86); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  @media (max-width:640px){.nav-inner{padding:16px 20px;}}
+  .brand{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:20px; letter-spacing:0.01em; white-space:nowrap;}
+  .brand .dot{color:var(--accent);}
+  nav.links{display:flex; gap:28px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
+  nav.links a{text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color .2s, color .2s;}
+  nav.links a:hover{color:var(--text); border-color:var(--accent);}
+  @media (max-width:560px){nav.links{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:96px 0 64px; border-bottom:1px solid var(--line);}
+  .hero-eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 20px;
+  }
+  .hero h1{
+    font-family:var(--font-display); font-weight:500; font-style:italic;
+    font-size:clamp(44px, 8vw, 92px); line-height:0.98; margin:0 0 24px; letter-spacing:-0.01em;
+  }
+  .hero p.tagline{font-size:18px; color:var(--muted); max-width:520px; margin:0 0 36px;}
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-body); font-size:13px; letter-spacing:0.04em; text-transform:uppercase;
+    padding:13px 26px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--text);
+    cursor:pointer; text-decoration:none; display:inline-block; transition:border-color .2s, background .2s, color .2s;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent);}
+  .btn.primary{background:var(--accent); color:#14130f; border-color:var(--accent);}
+  .btn.primary:hover{background:var(--accent-dim); border-color:var(--accent-dim); color:#f2ede4;}
+
+  /* sprocket strip - signature motif */
+  .sprocket-strip{
+    height:22px; width:100%;
+    background-image: radial-gradient(circle at 16px 11px, var(--bg) 5px, transparent 5.5px);
+    background-size: 32px 22px;
+    background-repeat:repeat-x;
+    background-color:var(--surface-2);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+
+  /* ---------- section heading ---------- */
+  .section{padding:72px 0;}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:40px; flex-wrap:wrap;}
+  .section-head h2{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:34px; margin:0;}
+  .section-head .meta{font-family:var(--font-mono); font-size:12px; color:var(--muted); letter-spacing:0.06em;}
+
+  /* ---------- album filter tabs ---------- */
+  .album-tabs{display:flex; flex-wrap:wrap; gap:10px; margin:0 0 28px;}
+  .album-tab{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; text-transform:uppercase;
+    padding:8px 16px; border:1px solid var(--line); border-radius:20px; background:transparent; color:var(--muted);
+    cursor:pointer; transition:border-color .2s, color .2s, background .2s;
+  }
+  .album-tab:hover{color:var(--text); border-color:var(--muted);}
+  .album-tab.active{background:var(--accent); color:#14130f; border-color:var(--accent);}
+  .album-tab .count{opacity:0.7; margin-left:2px;}
+
+  /* ---------- gallery (contact sheet) ---------- */
+  .contact-sheet{background:var(--surface); border:1px solid var(--line);}
+  .contact-sheet .sprocket-strip{border-left:1px solid var(--line); border-right:1px solid var(--line);}
+  .frames{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+    gap:1px; background:var(--line);
+  }
+  .frame{position:relative; background:var(--surface); aspect-ratio:4/5; overflow:hidden; cursor:pointer;}
+  .frame img{
+    width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(0.08) contrast(1.03);
+    opacity:0; transition:opacity .5s ease, transform .5s ease, filter .3s ease;
+  }
+  .frame img.loaded{opacity:1;}
+  .frame:hover img{transform:scale(1.045); filter:grayscale(0) contrast(1.05);}
+  .frame .frame-no{
+    position:absolute; top:8px; left:8px; font-family:var(--font-mono); font-size:11px;
+    color:var(--accent); background:rgba(20,19,15,0.72); padding:2px 6px; letter-spacing:0.04em; z-index:2;
+  }
+  .frame .frame-play{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:2;
+  }
+  .frame .frame-play span{
+    width:46px; height:46px; border-radius:50%; background:rgba(20,19,15,0.62); border:1px solid rgba(242,237,228,0.4);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .frame-cap .cap-album{display:block; color:var(--accent); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:2px;}
+  .frame .frame-cap{
+    position:absolute; left:0; right:0; bottom:0; padding:10px 12px; z-index:2;
+    background:linear-gradient(to top, rgba(20,19,15,0.9), transparent);
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text); opacity:0; transition:opacity .25s;
+  }
+  .frame:hover .frame-cap, .frame:focus-visible .frame-cap{opacity:1;}
+  .empty-sheet{padding:70px 24px; text-align:center; color:var(--muted-2); font-family:var(--font-mono); font-size:13px;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.4fr; gap:56px; align-items:start;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr; gap:28px;}}
+  .about-label{font-family:var(--font-mono); font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:14px;}
+  .about-grid .bio{font-size:16px; color:var(--muted); max-width:60ch;}
+  .about-grid .bio p{margin:0 0 16px;}
+
+  /* ---------- contact ---------- */
+  .contact-block{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:56px 0; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
+  }
+  .contact-block h2{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:40px; margin:0 0 6px; max-width:480px;}
+  .contact-links{display:flex; flex-direction:column; gap:6px; font-family:var(--font-mono); font-size:14px; text-align:right;}
+  .contact-links a{text-decoration:none; color:var(--muted); border-bottom:1px solid transparent; transition:color .2s, border-color .2s;}
+  .contact-links a:hover{color:var(--accent); border-color:var(--accent);}
+  @media (max-width:640px){.contact-block{flex-direction:column; align-items:flex-start;} .contact-links{text-align:left;}}
+
+  footer{padding:28px 0; text-align:center; font-family:var(--font-mono); font-size:11.5px; color:var(--muted-2); letter-spacing:0.04em;}
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(10,9,7,0.94); z-index:100;
+    display:none; align-items:center; justify-content:center; padding:32px;
+  }
+  .lightbox.open{display:flex;}
+  .lb-inner{max-width:1000px; width:100%; display:grid; grid-template-columns:1.6fr 1fr; gap:28px; max-height:88vh;}
+  @media (max-width:760px){.lb-inner{grid-template-columns:1fr; max-height:none; overflow-y:auto;}}
+  .lb-img-wrap{background:#000; display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid var(--line);}
+  .lb-img-wrap img, .lb-img-wrap video{max-width:100%; max-height:80vh; object-fit:contain; display:block;}
+  .lb-meta{padding:8px 4px; display:flex; flex-direction:column; gap:14px;}
+  .lb-meta label{font-family:var(--font-mono); font-size:11px; color:var(--muted-2); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:4px;}
+  .lb-field{padding:6px 2px; font-size:15px; min-height:22px; border-bottom:1px solid var(--line);}
+  .lb-close{
+    position:absolute; top:24px; right:32px; background:none; border:1px solid var(--line); color:var(--text);
+    width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1;
+  }
+  .lb-close:hover{border-color:var(--accent); color:var(--accent);}
+  .lb-frameno{font-family:var(--font-mono); color:var(--accent); font-size:13px; letter-spacing:0.06em;}
+
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="brand"><span id="brandName">Tu nombre</span><span class="dot">.</span></div>
+    <nav class="links">
+      <a href="#trabajos">Trabajos</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">Portafolio fotográfico y de video</p>
+    <h1 id="heroTitle">La luz, capturada.</h1>
+    <p class="tagline" id="heroTagline">Una selección de fotografías y video.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#trabajos">Ver trabajos</a>
+      <a class="btn" href="#contacto">Contacto</a>
+    </div>
+  </div>
+</section>
+
+<div class="sprocket-strip" aria-hidden="true"></div>
+
+<section class="section" id="trabajos">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Trabajos</h2>
+      <span class="meta" id="frameCount">00 elementos</span>
+    </div>
+
+    <div class="album-tabs" id="albumTabs"></div>
+
+    <div class="contact-sheet">
+      <div class="sprocket-strip" aria-hidden="true"></div>
+      <div class="frames" id="frames">
+        <div class="empty-sheet" id="emptyMsg">Cargando el portafolio…</div>
+      </div>
+      <div class="sprocket-strip" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sobre-mi" style="border-top:1px solid var(--line);">
+  <div class="wrap about-grid">
+    <div>
+      <p class="about-label">Sobre mí</p>
+      <p style="font-family:var(--font-mono); font-size:12px; color:var(--muted-2);">Cámara — Ubicación — Año</p>
+      <p id="aboutMeta" style="font-size:13px; color:var(--muted); margin-top:6px;">Cámara · Ciudad · Desde el año</p>
+    </div>
+    <div class="bio">
+      <p id="aboutBio">Escribí tu biografía en <code>data.json</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contacto" style="padding-top:0;">
+  <div class="wrap">
+    <div class="contact-block">
+      <div>
+        <h2>¿Trabajamos juntos?</h2>
+        <p style="color:var(--muted); margin:0;">Escribime para encargos, licencias de imágenes o colaboraciones.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:tu@email.com" id="contactEmail">tu@email.com</a>
+        <a href="#" id="contactInsta" target="_blank" rel="noopener noreferrer">@tuusuario</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span id="footerName">Tu nombre</span> — Portafolio fotográfico
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Cerrar" type="button">✕</button>
+  <div class="lb-inner">
+    <div class="lb-img-wrap" id="lbMediaWrap"></div>
+    <div class="lb-meta">
+      <span class="lb-frameno" id="lbFrameNo">N° 001</span>
+      <div id="rowTitle">
+        <label>Título</label>
+        <div class="lb-field" id="lbTitle"></div>
+      </div>
+      <div id="rowAlbum">
+        <label>Álbum</label>
+        <div class="lb-field" id="lbAlbum"></div>
+      </div>
+      <div id="rowCamera">
+        <label>Cámara / lente</label>
+        <div class="lb-field" id="lbCamera"></div>
+      </div>
+      <div id="rowLocation">
+        <label>Lugar</label>
+        <div class="lb-field" id="lbLocation"></div>
+      </div>
+      <div id="rowYear">
+        <label>Año</label>
+        <div class="lb-field" id="lbYear"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var META_KEYS = ["brandName","heroTitle","heroTagline","aboutMeta","aboutBio"];
+  var media = [];
+  var currentIndex = -1;
+  var activeAlbum = "todos";
+
+  function $(id){ return document.getElementById(id); }
+  function esc(str){ return String(str == null ? "" : str).replace(/</g,"&lt;"); }
+
+  function applyMeta(meta){
+    if(!meta) return;
+    META_KEYS.forEach(function(key){
+      var el = $(key);
+      if(el && meta[key]){ el.textContent = meta[key]; }
+    });
+    if(meta.brandName){ $("footerName").textContent = meta.brandName; }
+    if(meta.contactEmail){
+      $("contactEmail").textContent = meta.contactEmail;
+      $("contactEmail").href = "mailto:" + meta.contactEmail;
+    }
+    if(meta.contactInstaHandle){ $("contactInsta").textContent = meta.contactInstaHandle; }
+    if(meta.contactInstaUrl){ $("contactInsta").href = meta.contactInstaUrl; }
+  }
+
+  function albumOf(item){
+    return (item.album && String(item.album).trim()) ? String(item.album).trim() : "Sin álbum";
+  }
+
+  function frameNumber(index){
+    return "N° " + String(index+1).padStart(3,"0");
+  }
+
+  function renderAlbumTabs(){
+    var tabsEl = $("albumTabs");
+    var counts = {};
+    media.forEach(function(item){
+      var a = albumOf(item);
+      counts[a] = (counts[a] || 0) + 1;
+    });
+    var albumNames = Object.keys(counts).sort(function(a,b){ return a.localeCompare(b, "es"); });
+
+    if(albumNames.length <= 1){
+      tabsEl.innerHTML = "";
+      tabsEl.style.display = "none";
+      activeAlbum = "todos";
+      return;
+    }
+    tabsEl.style.display = "flex";
+    tabsEl.innerHTML = "";
+
+    var allTab = document.createElement("button");
+    allTab.type = "button";
+    allTab.className = "album-tab" + (activeAlbum === "todos" ? " active" : "");
+    allTab.innerHTML = "Todos <span class=\"count\">" + media.length + "</span>";
+    allTab.addEventListener("click", function(){ activeAlbum = "todos"; renderFrames(); });
+    tabsEl.appendChild(allTab);
+
+    albumNames.forEach(function(name){
+      var tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "album-tab" + (activeAlbum === name ? " active" : "");
+      tab.innerHTML = esc(name) + " <span class=\"count\">" + counts[name] + "</span>";
+      tab.addEventListener("click", function(){ activeAlbum = name; renderFrames(); });
+      tabsEl.appendChild(tab);
+    });
+  }
+
+  function renderFrames(){
+    renderAlbumTabs();
+
+    var container = $("frames");
+    var empty = $("emptyMsg");
+    container.querySelectorAll(".frame").forEach(function(f){ f.remove(); });
+
+    var visible = media.filter(function(item){
+      return activeAlbum === "todos" || albumOf(item) === activeAlbum;
+    });
+
+    if(media.length === 0){
+      if(empty){ empty.style.display = "block"; empty.textContent = "Todavía no hay contenido publicado en data.json."; }
+    } else if(visible.length === 0){
+      if(empty){ empty.style.display = "block"; empty.textContent = "No hay elementos en este álbum."; }
+    } else {
+      if(empty) empty.style.display = "none";
+    }
+
+    visible.forEach(function(item){
+      var i = media.indexOf(item);
+      var frame = document.createElement("div");
+      frame.className = "frame";
+      frame.tabIndex = 0;
+      frame.setAttribute("role","button");
+      frame.setAttribute("aria-label", "Ver " + (item.title || frameNumber(i)));
+
+      var thumbSrc = item.thumb || (item.type === "video" ? item.poster : item.src);
+      if(thumbSrc){
+        var img = document.createElement("img");
+        img.src = thumbSrc;
+        img.alt = item.title || ("Elemento " + frameNumber(i));
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.addEventListener("load", function(){ img.classList.add("loaded"); });
+        frame.appendChild(img);
+      }
+
+      if(item.type === "video"){
+        var play = document.createElement("div");
+        play.className = "frame-play";
+        play.innerHTML = '<span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 2.5v11l9-5.5-9-5.5z" fill="#f2ede4"/></svg></span>';
+        frame.appendChild(play);
+      }
+
+      var no = document.createElement("span");
+      no.className = "frame-no";
+      no.textContent = frameNumber(i);
+      frame.appendChild(no);
+
+      var cap = document.createElement("div");
+      cap.className = "frame-cap";
+      var albumSpan = document.createElement("span");
+      albumSpan.className = "cap-album";
+      albumSpan.textContent = albumOf(item);
+      cap.appendChild(albumSpan);
+      cap.appendChild(document.createTextNode(item.title || "Sin título"));
+      frame.appendChild(cap);
+
+      frame.addEventListener("click", function(){ openLightbox(item.id); });
+      frame.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); openLightbox(item.id); }
+      });
+
+      container.appendChild(frame);
+    });
+
+    $("frameCount").textContent = String(media.length).padStart(2,"0") + " elemento" + (media.length === 1 ? "" : "s");
+  }
+
+  /* ---------- lightbox ---------- */
+  function openLightbox(id){
+    var item = media.find(function(m){ return m.id === id; });
+    if(!item) return;
+    currentIndex = media.indexOf(item);
+
+    var wrap = $("lbMediaWrap");
+    wrap.innerHTML = "";
+
+    if(item.type === "video"){
+      var video = document.createElement("video");
+      video.src = item.src;
+      if(item.poster) video.poster = item.poster;
+      video.controls = item.controls !== false;
+      video.playsInline = true;
+      video.setAttribute("playsinline", "");
+      video.preload = "metadata";
+      video.muted = !!item.muted;
+      video.loop = !!item.loop;
+      if(item.autoplay){ video.autoplay = true; }
+      wrap.appendChild(video);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title || "Fotografía";
+      wrap.appendChild(img);
+    }
+
+    $("lbFrameNo").textContent = frameNumber(currentIndex);
+    $("lbTitle").textContent = item.title || "";
+    $("lbAlbum").textContent = albumOf(item) === "Sin álbum" ? "" : albumOf(item);
+    $("lbCamera").textContent = item.camera || "";
+    $("lbLocation").textContent = item.location || "";
+    $("lbYear").textContent = item.year || "";
+
+    var rows = { rowTitle:item.title, rowAlbum:(albumOf(item) !== "Sin álbum" ? albumOf(item) : ""), rowCamera:item.camera, rowLocation:item.location, rowYear:item.year };
+    Object.keys(rows).forEach(function(rowId){
+      $(rowId).style.display = rows[rowId] ? "" : "none";
+    });
+
+    $("lightbox").classList.add("open");
+  }
+
+  function closeLightbox(){
+    $("lightbox").classList.remove("open");
+    $("lbMediaWrap").innerHTML = "";
+    currentIndex = -1;
+  }
+
+  /* ---------- load content ---------- */
+  function loadContent(){
+    fetch("data.json", { cache: "no-store" })
+      .then(function(res){
+        if(!res.ok) throw new Error("data.json respondió " + res.status);
+        return res.json();
+      })
+      .then(function(data){
+        applyMeta(data.meta);
+        media = Array.isArray(data.media) ? data.media : [];
+        renderFrames();
+      })
+      .catch(function(err){
+        console.error("No se pudo cargar data.json:", err);
+        media = [];
+        renderFrames();
+        var empty = $("emptyMsg");
+        if(empty){ empty.style.display = "block"; empty.textContent = "No se pudo cargar el contenido. Verificá que data.json exista junto a index.html."; }
+      });
+  }
+
+  function init(){
+    loadContent();
+    $("lbClose").addEventListener("click", closeLightbox);
+    $("lightbox").addEventListener("click", function(e){ if(e.target === $("lightbox")) closeLightbox(); });
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeLightbox(); });
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
